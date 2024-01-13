@@ -1,0 +1,34 @@
+{
+  "name": "@eznix/try",
+  "version": "1.0.0",
+  "description": "Treat async function errors as values",
+  "main": "index.ts",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@biomejs/biome": "1.5.1",
+    "bun-types": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "directories": {
+    "lib": "lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eznix86/try.git"
+  },
+  "keywords": [
+    "error-handling",
+    "promises",
+    "try",
+    "errors-as-value"
+  ],
+  "author": "Bruno Bernard",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/eznix86/try/issues"
+  },
+  "homepage": "https://github.com/eznix86/try#readme"
+}
