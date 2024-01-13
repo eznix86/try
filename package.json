@@ -2,12 +2,26 @@
   "name": "@eznix/try",
   "version": "1.0.1",
   "description": "Treat async function errors as values",
-  "main": "index.ts",
-  "module": "index.ts",
+  "main": "./dist/try-async.umd.cjs",
+  "module": "./dist/try-async.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/try-async.js",
+      "require": "./dist/try-async.umd.cjs"
+    }
+  },
   "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
   "devDependencies": {
     "@biomejs/biome": "1.5.1",
-    "bun-types": "latest"
+    "@types/node": "^20.11.0",
+    "bun-types": "latest",
+    "vite": "^5.0.8",
+    "vite-plugin-dts": "^3.7.0"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
