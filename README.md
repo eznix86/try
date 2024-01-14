@@ -1,6 +1,36 @@
 # Try
 
-Treat Errors should be values for async functions. Stop the callback hell (nested then) and the tower of doom (try catch block).
+## Concept
+
+This package aims to simulate an approach where errors are treated as values, similar to programming languages like [Rust](https://doc.rust-lang.org/rust-by-example/error.html) and [Golang](https://go.dev/blog/error-handling-and-go), where errors are explicit.
+
+In Rust, using the Result Pattern:
+
+```rust
+fn main() {
+    let result = File::open("hello.txt");
+
+    let greeting_file = match result {
+        Ok(file) => file,
+        Err(error) => // handle errors,
+    };
+}
+```
+
+In Golang, errors are implicit:
+
+```go
+f, err := os.Open("filename.ext")
+if err != nil {
+  // handle errors
+}
+```
+
+## Why?
+
+Treating errors as values is beneficial for asynchronous functions, aiming to eliminate callback hell (nested then) and the tower of doom (try-catch block).
+
+By treating errors as values, the project simplifies error handling, making it more explicit and reducing the chances of overlooking errors.
 
 ## Getting Started
 
@@ -17,7 +47,7 @@ npm install @eznix/try
 ## Wrapping Asynchronous Operations
 
 ```js
-// fetchUser is an async function
+// `fetchUser` is an async function
 const tryFetchUser = await tryAsync(fetchUser);
 ```
 
@@ -32,14 +62,14 @@ const user = await tryFetchUser.getOrElse({"id": 1, "name": "jimmy"}); // Use a 
 ### Inspect Error
 
 ```js
- const error = await tryFetchUser.error(); // Get the error if the operation failed
+const error = await tryFetchUser.error(); // Get the error if the operation failed
 ```
 
 ### Recover from Failure
 
 ```js
-// compared to getOrElse() function, you can try other stuff, like another fetch
-// it will return errors as value.
+// Compared to `getOrElse()`, you can try other actions, like another fetch.
+// It will return errors as a value.
 const recoveredTry = await tryFetchUser.recover((error) => defaultUser);
 ```
 
@@ -48,18 +78,18 @@ const recoveredTry = await tryFetchUser.recover((error) => defaultUser);
 ```js
 const result = await tryFetchUser.result();
 console.log(result.isOk()); // true
-console.log(result.unwrap())
+console.log(result.unwrap());
 ```
 
 ## Examples
 
-Examples of using tryAsync.
+Examples of using `tryAsync`.
 
 ### Basic
 
 ```js
 // Wrapping a potentially failing asynchronous operation
-// Like network failure, or a bad response from the server
+// Like network failure or a bad response from the server
 const fetchUser = async (id: number): Promise<User> => {
     const response = await fetch(`/api/users/${id}`);
     const user = await response.json();
@@ -69,10 +99,9 @@ const fetchUser = async (id: number): Promise<User> => {
 const tryFetchUser = await tryAsync(fetchUser(123));
 
 // Handling the result:
-  const user = await tryFetchUser.getOrElse({"id": 1, "name": "Jimmy"});
-  console.log("User: ", user.name);
-  // User: Jimmy
-
+const user = await tryFetchUser.getOrElse({"id": 1, "name": "Jimmy"});
+console.log("User: ", user.name);
+// User: Jimmy
 ```
 
 ### All features
@@ -80,7 +109,7 @@ const tryFetchUser = await tryAsync(fetchUser(123));
 ```js
 // Example Usage:
 (async () => {
-    // Trying an asynchronous operation using tryAsync
+    // Trying an asynchronous operation using `tryAsync`
     let fn = await tryAsync<number, any>(async () => {
         return 10000;
     });
