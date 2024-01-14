@@ -4,6 +4,8 @@
 
 This package aims to simulate an approach where errors are treated as values, similar to programming languages like [Rust](https://doc.rust-lang.org/rust-by-example/error.html) and [Golang](https://go.dev/blog/error-handling-and-go), where errors are explicit.
 
+Check also [Railway Oriented Programming](https://swlaschin.gitbooks.io/fsharpforfunandprofit/content/posts/recipe-part2.html).
+
 In Rust, using the Result Pattern:
 
 ```rust
@@ -32,6 +34,9 @@ Treating errors as values is beneficial for asynchronous functions, aiming to el
 
 By treating errors as values, the project simplifies error handling, making it more explicit and reducing the chances of overlooking errors.
 
+> ![NOTE]
+> We also support synchronous function too. Use `trySync`, it will return no promise.
+
 ## Getting Started
 
 > [!WARNING]
@@ -47,8 +52,13 @@ npm install @eznix/try
 ## Wrapping Asynchronous Operations
 
 ```js
+import { trySync, tryAsync } from "@eznix/try";
+
 // `fetchUser` is an async function
 const tryFetchUser = await tryAsync(fetchUser);
+// `fetchUser` is an sync function
+const tryFetchUser = trySync(fetchUser);
+
 ```
 
 ## Handling Results
