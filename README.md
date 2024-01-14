@@ -4,6 +4,9 @@ Treat Errors should be values for async functions. Stop the callback hell (neste
 
 ## Getting Started
 
+> [!WARNING]
+> It is not yet published on npm.
+
 ```bash
 bun add @eznix/try
 yarn install @eznix/try
@@ -151,7 +154,7 @@ export default MyComponent;
 
 ### Vue
 
-```vue
+```html
 <template>
   <div>
     <p>Value: {{ value }}</p>
@@ -183,7 +186,7 @@ export default {
 
 ### Svelte
 
-```svelte
+```html
 <script>
   import { onMount } from "svelte";
   import { tryAsync } from "@eznix/try";
