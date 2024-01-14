@@ -58,23 +58,20 @@ Examples of using tryAsync.
 ### Basic
 
 ```js
-// Wrapping a potentially failing asynchronous operation:
+// Wrapping a potentially failing asynchronous operation
+// Like network failure, or a bad response from the server
 const fetchUser = async (id: number): Promise<User> => {
-  try {
     const response = await fetch(`/api/users/${id}`);
     const user = await response.json();
     return user;
-  } catch (error) {
-    throw new Error(`Failed to fetch user ${id}`);
-  }
 };
 
 const tryFetchUser = await tryAsync(fetchUser(123));
 
 // Handling the result:
-  const user = await tryFetchUser.getOrElse("I want this message instead");
-  console.log("User: ", user);
-  // User: I want this message instead
+  const user = await tryFetchUser.getOrElse({"id": 1, "name": "Jimmy"});
+  console.log("User: ", user.name);
+  // User: Jimmy
 
 ```
 
