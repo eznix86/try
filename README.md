@@ -44,7 +44,7 @@ Try is a wrapper for your functions. It enforces the need to handle errors and e
 
 By treating errors as values, the project simplifies error handling, making it more explicit and reducing the chances of overlooking errors.
 
-> ![NOTE]
+> [!NOTE]
 > We also support synchronous function too. Use `trySync`, it will return no promise.
 
 ## Getting Started
