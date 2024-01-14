@@ -1,12 +1,13 @@
 {
   "name": "@eznix/try",
-  "version": "2.0.0",
+  "version": "2.0.2",
   "description": "Handle errors as values with ease",
   "main": "./dist/try.umd.cjs",
   "module": "./dist/try.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "import": "./dist/try.js",
       "require": "./dist/try.umd.cjs"
     }
@@ -32,6 +33,7 @@
   "directories": {
     "lib": "lib"
   },
+  "files": ["README.md", "./dist/**/*"],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/eznix86/try.git"
