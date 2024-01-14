@@ -14,7 +14,7 @@ export default class Result<T, E> {
 
 	unwrap(): T {
 		if (this.value instanceof Error) {
-            throw this.value;
+			throw this.value;
 		}
 
 		return this.value as T;
