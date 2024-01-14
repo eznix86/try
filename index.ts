@@ -1,4 +1,5 @@
 import Result from "~/result";
-import { tryAsync } from "~/try";
+import { tryAsync } from "~/try-async";
+import { trySync } from "~/try-sync";
 
-export default { Result, tryAsync };
+export default { Result, tryAsync, trySync };

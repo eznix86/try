@@ -1,5 +1,5 @@
 import { expect, test } from "bun:test";
-import { tryAsync } from '~/try';
+import { tryAsync } from '~/try-async';
 
 test('recover() recovers from errors', async () => {
     const error = new Error('Original error');
@@ -106,4 +106,4 @@ test('try() creates a failed Try for failed promise calls', async () => {
 
     expect(result.isOk()).toBe(false);
     expect(result.unwrapErr()).toBe(error);
-})
+});
