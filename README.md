@@ -30,7 +30,17 @@ if err != nil {
 
 ## Why?
 
-Treating errors as values is beneficial for asynchronous functions, aiming to eliminate callback hell (nested then) and the tower of doom (try-catch block).
+Errors are not explicit in Javascript. Importing an external library or using your own code can introduce errors that can be difficult to track down. So your code is based on trust alone.
+
+```js
+import { fetchUser } from "./user";
+import { leftpad } from "leftpad";
+
+await fetchUser(); // should we handle the errors ?
+leftpad(); // should we handle the errors ?
+```
+
+Try is a wrapper for your functions. It enforces the need to handle errors and errors is not thrown, they are returned as values. The library also aims to eliminate callback hell (nested then) and the tower of doom (try-catch block).
 
 By treating errors as values, the project simplifies error handling, making it more explicit and reducing the chances of overlooking errors.
 
@@ -239,3 +249,11 @@ export default {
   });
 </script>
 ```
+
+## Contributing
+
+Feel free to open an issue or a pull request. Please make sure to run `bun test` before opening a pull request.
+
+## TODO
+
+- [ ] Create a unified function to wrap sync functions and async functions and returns the appropriate type/signature.
