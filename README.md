@@ -165,86 +165,169 @@ console.log("User: ", user.name);
 
 ## Usage with Javascript framework
 
+### Plain Javascript
+
+```js
+// Chaining tryAsync to avoid callback nesting
+
+const getUser = async (id) => {
+  // API call to fetch user 
+};
+
+const getFriends = async (user) => {
+  // API call to get user's friends
+};
+
+const renderProfile = async (user, friends) => {
+  // Render profile page
+};
+
+// Without tryAsync
+getUser(1)
+  .then(user => {
+    return getFriends(user) 
+      .then(friends => {
+        renderProfile(user, friends);
+      })
+  })
+  .catch(err => {
+    // Handle error
+  });
+
+// With tryAsync
+const user = await tryAsync(getUser(1))
+  .recover(handleGetUserError)
+  .getOrElse({id: 1}); 
+
+const friends = await tryAsync(getFriends(user))
+  .recover(handleGetFriendsError)
+  .getOrElse([]);
+
+renderProfile(user, friends);
+
+```
+
 ### React
 
 ```jsx
-import React, { useEffect, useState } from "react";
-import { tryAsync } from "@eznix/try";
+import React, { useState, useEffect } from 'react';
+import { tryAsync } from '@eznix/try';
 
-const MyComponent = () => {
-  const [value, setValue] = useState(null);
+function MyComponent() {
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      let fn = await tryAsync(async () => {
-        // Your asynchronous operation here
-        return 10000;
-      });
+    async function fetchUser() {
+      const user = await tryAsync(fetch('/api/user'))
+        .recover(handleFetchError)
+        .getOrElse(null);
+      
+      setUser(user);
+    }
 
-      setValue(await fn.getOrElse(11));
+    fetchUser();
+  }, []);
 
-      console.log("Value:", value);
-    };
+  if (!user) {
+    return <p>Loading...</p>;
+  }
 
-    fetchData();
-  }, [value]);
+  return <Profile user={user} />;
+}
 
-  return <p>Value: {value}</p>;
-};
-
-export default MyComponent;
+function handleFetchError(err) {
+  console.error(err);
+  return null;
+}
 ```
 
 ### Vue
 
 ```html
 <template>
-  <div>
-    <p>Value: {{ value }}</p>
+  <div v-if="loading">
+    Loading...
+  </div>
+
+  <div v-else-if="error">
+    {{ errorMessage }}
+  </div>
+
+  <div v-else>
+    <UserProfile :user="user"/>
   </div>
 </template>
 
 <script>
-import { tryAsync } from "@eznix/try";
+import { ref } from 'vue';
+import { tryAsync } from '@eznix/try';
 
 export default {
-  async mounted() {
-    let fn = await tryAsync(async () => {
-      // Your asynchronous operation here
-      return 10000;
-    });
+  setup() {
+    const user = ref(null);
+    const loading = ref(true);
+    const error = ref(null);
 
-    this.value = await fn.getOrElse(11);
+    async function fetchUser() {
+      user.value = await tryAsync(loadUser)
+        .recover(handleError)
+        .getOrElse(null);
+      
+      loading.value = false;
+    }
 
-    console.log("Value:", this.value);
-  },
-  data() {
-    return {
-      value: null,
-    };
-  },
-};
+    function handleError(err) {
+      error.value = err;
+    }
+
+    function loadUser() {
+      return fetch('/api/user').then(res => res.json());
+    }
+
+    fetchUser();
+
+    return { user, loading, error };
+  }
+}
 </script>
 ```
 
 ### Svelte
 
-```html
+```svelte
 <script>
-  import { onMount } from "svelte";
-  import { tryAsync } from "@eznix/try";
+import { tryAsync } from '@eznix/try';
 
-  onMount(async () => {
-    let fn = await tryAsync(async () => {
-      // Your asynchronous operation here
-      return 10000;
-    });
+let user = null;
+let error = null;
+let loading = true;
 
-    let value = await fn.getOrElse(11);
+async function getUser() {
+  user = await tryAsync(fetchUser)
+    .recover(handleError)
+    .getOrElse(null);
+  
+  loading = false; 
+}
 
-    console.log("Value:", value);
-  });
+function handleError(err) {
+  error = err;
+}
+
+async function fetchUser() {
+  // API call to fetch user
+}
+
+getUser();
 </script>
+
+{#if loading}
+  <p>Loading...</p>
+{:else if error}
+  <p>Error: {error.message}</p>  
+{:else}
+  <UserProfile {user} />
+{/if}
 ```
 
 ## Contributing
