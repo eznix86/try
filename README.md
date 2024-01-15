@@ -49,9 +49,6 @@ By treating errors as values, the project simplifies error handling, making it m
 
 ## Getting Started
 
-> [!WARNING]
-> It is not yet published on npm.
-
 ```bash
 bun add @eznix/try
 yarn install @eznix/try
