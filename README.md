@@ -58,7 +58,7 @@ pnpm add @eznix/try
 npm install @eznix/try
 ```
 
-## Wrapping Asynchronous Operations
+## Wrapping Operations
 
 ```js
 import { trySync, tryAsync } from "@eznix/try";
@@ -129,36 +129,43 @@ console.log("User: ", user.name);
 // Example Usage:
 (async () => {
     // Trying an asynchronous operation using `tryAsync`
-    let fn = await tryAsync<number, any>(async () => {
-        return 10000;
+    let failFn = await tryAsync<number, any>(async () => {
+        throw new Error('Failed');
+    });
+
+    let fn = await tryAsync<{name: string}, any>(async () => {
+        return {name: 'John'};
     });
 
     // Getting the result value or a default if there is an error
-    let value: number = await fn.getOrElse(11);
-    console.log('Value:', value); // 10000
+    let value: {name: string} = await fn.getOrElse({name: 'Default'});
+    console.log('Value:', value); // {name: 'John'}
 
     // Getting the error, if any
-    let error = await fn.error();
-    console.log('Error:', error); // null
+    let error = await failFn.error();
+    console.log('Error:', error); // Error: Failed
 
     // Getting both errors and data in a single Promise
     let { error: errors, data } = await fn.toPromise();
     console.log('Errors:', errors); // null
-    console.log('Data:', data); // 10000
+    console.log('Data:', data); // {name: 'John'}
 
     // Recovering from errors by providing a fallback value
-    let recoveredTry = await fn.recover((error) => 100);
-    console.log('RecoveredTry:', recoveredTry); // Promise<Try<number, any>>
+    let recoveredTry = await failFn.recover((error) => 
+    // perform another network call
+    {name: "Recover"}
+    );
+    console.log('RecoveredTry:', recoveredTry); // Promise<Try<number, {name: string}>>
 
     let { data: recovered } = await recoveredTry.toPromise();
-    console.log('Recovered:', recovered); // 10000
+    console.log('Recovered:', recovered); // 100
 
     // Getting the result in a structured way
     let resultPattern = await fn.result();
 
     // Handling the result using the Result class
     if (resultPattern.isOk() && !resultPattern.isNull()) {
-        console.log("ResultPattern", resultPattern.unwrap()); // 10000
+        console.log("ResultPattern", resultPattern.unwrap()); // {name: 'John'}
     } else {
         console.log("ResultPattern", resultPattern.unwrapErr()); // null
     }
