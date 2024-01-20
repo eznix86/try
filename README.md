@@ -1,5 +1,7 @@
 # Try
 
+![Bundle size](https://deno.bundlejs.com/badge?q=@eznix/try@2.0.2&treeshake=[*])
+
 ## Concept
 
 This package aims to simulate an approach where errors are treated as values, similar to programming languages like [Rust](https://doc.rust-lang.org/rust-by-example/error.html) and [Golang](https://go.dev/blog/error-handling-and-go), where errors are explicit.
