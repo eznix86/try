@@ -1,6 +1,6 @@
 {
   "name": "@eznix/try",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "Handle errors as values with ease",
   "main": "./dist/try.umd.cjs",
   "module": "./dist/try.js",
