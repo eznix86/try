@@ -1,6 +1,6 @@
 {
   "name": "@eznix/try",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Handle errors as values with ease",
   "main": "./dist/try.umd.cjs",
   "module": "./dist/try.js",
@@ -33,7 +33,10 @@
   "directories": {
     "lib": "lib"
   },
-  "files": ["README.md", "./dist/**/*"],
+  "files": [
+    "README.md",
+    "./dist/**/*"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/eznix86/try.git"
