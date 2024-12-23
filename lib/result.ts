@@ -8,6 +8,10 @@ export default class Result<T, E> {
 		return !this.isError;
 	}
 
+	isErr() {
+		return this.isError;
+	}
+
 	isNull() {
 		return this.value === null;
 	}
