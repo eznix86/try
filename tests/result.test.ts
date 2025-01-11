@@ -12,6 +12,17 @@ test("isOk() returns false for error results", () => {
 	expect(result.isOk()).toBe(false);
 });
 
+test("isErr() returns false for successful results", () => {
+	const result = new Result<number, null>(10, false);
+	expect(result.isErr()).toBe(false);
+});
+
+test("isErr() returns true for error results", () => {
+	const error = new Error("Something went wrong");
+	const result = new Result<null, Error>(error, true);
+	expect(result.isErr()).toBe(true);
+});
+
 test("isNull() returns true for null results", () => {
 	const result = new Result(null, false);
 	expect(result.isNull()).toBe(true);

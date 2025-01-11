@@ -97,6 +97,7 @@ const recoveredTry = await tryFetchUser.recover((error) => defaultUser);
 ```js
 const result = await tryFetchUser.result();
 console.log(result.isOk()); // true
+console.log(result.isErr()); // false
 console.log(result.unwrap());
 ```
 
@@ -168,6 +169,13 @@ console.log("User: ", user.name);
         console.log("ResultPattern", resultPattern.unwrap()); // {name: 'John'}
     } else {
         console.log("ResultPattern", resultPattern.unwrapErr()); // null
+    }
+
+    // Alternatively, you can use isErr()
+    if (resultPattern.isErr()) {
+        console.log("ResultPattern", resultPattern.unwrapErr()); // null
+    } else {
+        console.log("ResultPattern", resultPattern.unwrap()); // {name: 'John'}
     }
 })();
 ```
