@@ -1,6 +1,6 @@
 # Try
 
-![Bundle size](https://deno.bundlejs.com/badge?q=@eznix/try@2.0.2&treeshake=[*])
+![Bundle size](https://deno.bundlejs.com/badge?q=@eznix/try&treeshake=[*])
 
 ## Concept
 
@@ -57,6 +57,8 @@ yarn install @eznix/try
 pnpm add @eznix/try
 npm install @eznix/try
 ```
+
+Don't forget to star it if you like the [project](https://github.com/eznix86/try).
 
 ## Wrapping Operations
 
@@ -350,7 +352,3 @@ getUser();
 ## Contributing
 
 Feel free to open an issue or a pull request. Please make sure to run `bun test` before opening a pull request.
-
-## TODO
-
-- [ ] Create a unified function to wrap sync functions and async functions and returns the appropriate type/signature.
